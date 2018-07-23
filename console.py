@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             args = shlex.split(args)
             new_instance = eval(args[0])()
-            if len(args) > 1:
+            if len(args) => 1:
                 new_dict = dict(args_split.split("=")
                                 for args_split in args[1:])
                 for key, value, in new_dict.items():
