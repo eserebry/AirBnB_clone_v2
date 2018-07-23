@@ -5,12 +5,22 @@
 import uuid
 from datetime import datetime
 import models
+import sqlalchemy
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
+Base = declarative_base()
 
 class BaseModel:
     '''
         Base class for other classes to be used for the duration.
     '''
+
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
     def __init__(self, *args, **kwargs):
         '''
             Initialize public instance attributes.
@@ -19,7 +29,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
         else:
             kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
                                                      "%Y-%m-%dT%H:%M:%S.%f")
@@ -38,7 +47,7 @@ class BaseModel:
 
     def __repr__(self):
         '''
-            Return string representation of BaseModel class
+            #Return string representation of BaseModel class
         '''
         return ("[{}] ({}) {}".format(self.__class__.__name__,
                                       self.id, self.__dict__))
@@ -48,6 +57,7 @@ class BaseModel:
             Update the updated_at attribute with new.
         '''
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):

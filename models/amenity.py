@@ -3,10 +3,14 @@
     Implementation of the Amenity class
 '''
 from models.base_model import BaseModel
-
+import sqlalchemy
+from sqlalchemy import Column, String
 
 class Amenity(BaseModel):
     '''
         Implementation for the Amenities.
     '''
-    name = ""
+
+    __tablename__ = 'amenities'
+
+    name = Column(String(128), nullable=False)
