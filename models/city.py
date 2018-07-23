@@ -2,12 +2,26 @@
 '''
     Define the class City.
 '''
-from models.base_model import BaseModel
+import sqlalchemy
+from models.base_model import BaseModel, Base
+from models.state import State
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
+from os import getenv
 
-
-class City(BaseModel):
+class City(BaseModel, Base):
     '''
         Define the class City that inherits from BaseModel.
     '''
-    state_id = ""
-    name = ""
+    __tablename__ = 'cities'
+
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+
+        name = Column(String(128), nullable=False)
+        state_id = Column(String(60), ForeignKey(State.id), nullable=False)
+        state = relationship("State")
+        places = relationship("Place", cascade="all, delete-orphan")
+
+    else:
+        name = ""
+        state_id = ""

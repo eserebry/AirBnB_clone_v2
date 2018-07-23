@@ -2,6 +2,7 @@
 '''
     Implementing the console for the HBnB project.
 '''
+import models
 import cmd
 import json
 import shlex
@@ -43,25 +44,33 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args)
+            args = shlex.split(args, posix=False)
             new_instance = eval(args[0])()
-            if len(args) >= 1:
-                new_dict = dict(args_split.split("=")
-                                for args_split in args[1:])
-                for key, value, in new_dict.items():
-                    if "_" in value:
-                        value = value.replace("_", " ")
-                        try:
-                            value = eval(value)
-                        except:
-                            pass
-                        setattr(new_instance, key, value)
-                    new_instance.save()
-            else:
-                new_instance.save()
+            if len(args) > 1:
+                for i in range(1, len(args)):
+                    key, value = args[i].split('=')
+                    if value[0] == '\"' and value[len(value) - 1] == '\"':
+                        value = value[1:len(value) - 1]
+                        value = value.replace('"', '\"')
+                        value = value.replace('_', ' ')
+                        value = str(value)
+
+                    elif '.' in value:
+                        value = float(value)
+
+                    elif isinstance(eval(value), int):
+                        value = int(value)
+
+                    else:
+                        continue
+
+                    setattr(new_instance, key, value)
+
+            new_instance.save()
             print(new_instance.id)
 
-        except:
+        except Exception as e:
+            print(e)
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -126,9 +135,7 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name.
         '''
         obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
+        objects = models.storage.all()
         try:
             if len(args) != 0:
                 eval(args)
