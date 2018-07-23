@@ -62,6 +62,9 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        '''
+            Deletes an object from the FileStorage schema
+        '''
         dic = FileStorage.__objects
         if obj is not None and obj in dic.values():
             key = obj.__class__.__name__ + '.' + str(obj.id)
