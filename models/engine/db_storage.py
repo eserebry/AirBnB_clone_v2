@@ -4,7 +4,7 @@ DBStorage schema using SQLAlchemy and MySQL
 '''
 import sqlalchemy
 from sqlalchemy import create_engine
-from os import environ
+from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
@@ -28,13 +28,13 @@ class DBStorage:
         '''
             Instantiation of a database storage class
         '''
-        user = environ['HBNB_MYSQL_USER']
-        password = environ['HBNB_MYSQL_PWD']
-        host = environ['HBNB_MYSQL_HOST']
-        database = environ['HBNB_MYSQL_DB']
+        user = getenv('HBNB_MYSQL_USER')
+        password = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        database = getenv('HBNB_MYSQL_DB')
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, password, host, database), pool_pre_ping=True) 
-        if 'HBNB_ENV' in environ and environment == 'test':
+        if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
                              
     def all(self, cls=None):
