@@ -4,8 +4,10 @@
 '''
 
 from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
 import sqlalchemy
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, ForeignKey
 
 class Review(BaseModel):
     '''

@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
             if len(args) > 1:
                 for i in range(1, len(args)):
                     key, value = args[i].split('=')
-                    if value[0] == '"' and value[len(value) - 1] == '"':
+                    if value[0] == '\"' and value[len(value) - 1] == '\"':
                         value = value[1:len(value) - 1]
                         value = value.replace('"', '\"')
                         value = value.replace('_', ' ')
@@ -69,7 +69,8 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
-        except:
+        except Exception as e:
+            print(e)
             print("** class doesn't exist **")
 
     def do_show(self, args):

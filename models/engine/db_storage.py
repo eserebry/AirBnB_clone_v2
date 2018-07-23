@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import models
 
 class DBStorage:
     '''
@@ -46,16 +47,25 @@ class DBStorage:
             Return:
                 a dictionary of objects of the corresponding cls
         '''
+        to_query = []
         new_dict = {}
         if cls is not None:
             results = self.__session.query(cls).all()
+            for row in results:
+                key = row.__class__.__name__ + '.' + row.id
+                new_dict[key] = row
         else:
-            results = self.__session.query(State).all()
-
-        for row in results:
-            key = row.__class__.__name__ + '.' + row.id
-            new_dict[key] = row
-
+            for key, value in models.classes.items():
+                try:
+                    self.__session.query(models.classes[key]).all()
+                    to_query.append(models.classes[key])
+                except:
+                    continue
+            for classes in to_query:
+                    results = self.__session.query(classes).all()
+                    for row in results:
+                        key = row.__class__.__name__ + '.' + row.id
+                        new_dict[key] = row
         return new_dict
 
     def new(self, obj):

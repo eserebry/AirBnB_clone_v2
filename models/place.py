@@ -3,8 +3,10 @@
     Define the class Place.
 '''
 from models.base_model import BaseModel
+from models.city import City
+from models.user import User
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import Column, String, Integer, Float, ForeignKey
 
 class Place(BaseModel):
     '''
