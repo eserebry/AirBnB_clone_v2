@@ -25,7 +25,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             instance_list = []
-            for key, obj in models.storage.__objects.items()
+            for key, obj in models.storage.__objects.items():
                 if obj.__class__ == 'City':
                     if obj.state_id == self.id:
                         instance_list.append(obj)
