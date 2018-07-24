@@ -5,6 +5,7 @@
 from models.base_model import BaseModel, Base
 from models.city import City
 from models.user import User
+from models.review import Review
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship

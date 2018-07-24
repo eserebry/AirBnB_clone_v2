@@ -5,7 +5,6 @@
 
 from models.base_model import BaseModel
 from models.user import User
-from models.place import Place
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from os import getenv
@@ -23,7 +22,6 @@ class Review(BaseModel):
         place_id = Column(String(60), ForeignKey(Place.id), nullable=False)
         user_id = Column(String(60), ForeignKey(User.id), nullable=False)
         user = relationship("User")
-        place = relationship("Place")
 
     else:
         place_id = ""
