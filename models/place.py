@@ -9,6 +9,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
+import models
 
 class Place(BaseModel, Base):
     '''
@@ -30,6 +31,7 @@ class Place(BaseModel, Base):
         amenity_ids = []
         user = relationship("User")
         cities = relationship("City")
+        reviews = relationship("Review", cascade="all, delete-orphan")
 
     else:
         city_id = ""
@@ -43,3 +45,12 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            instance_list = []
+            for key, obj in models.storage.__objects.items():
+                if obj.__class__ == 'Review':
+                    if obj.place_id == self.id:
+                        instance_list.append(obj)
+            return instance_list
