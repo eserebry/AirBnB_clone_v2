@@ -4,10 +4,13 @@
 '''
 from models.base_model import BaseModel, Base
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 
+place_amenity_association = Table("place_amenity", Base.metadata,
+                                  Column("place_id", String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+                                  Column("amenity_id", String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 
 class Place(BaseModel, Base):
     '''
@@ -30,6 +33,7 @@ class Place(BaseModel, Base):
         user = relationship("User")
         cities = relationship("City")
         reviews = relationship("Review", cascade="all, delete-orphan")
+        amenities = relationship("Amenity", secondary=place_amenity_association, viewonly=False, back_populates="place_amenities")
 
     else:
         city_id = ""
@@ -52,3 +56,18 @@ class Place(BaseModel, Base):
                     if obj.place_id == self.id:
                         instance_list.append(obj)
             return instance_list
+
+        @property
+        def amenities(self):
+            amenity_list=[]
+            for id in amenity_ids:
+                key = 'Amenity.{}'.format(id)
+                if key in self.__objects.keys():
+                    amenity_list.append(self.__objects[key])
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            if type(obj) == Amenity:
+                self.amenity_ids.append(obj.id)
+            else:
+                pass
