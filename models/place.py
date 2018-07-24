@@ -3,14 +3,13 @@
     Define the class Place.
 '''
 from models.base_model import BaseModel, Base
-from models.city import City
-from models.user import User
-from models.review import Review
 import sqlalchemy
+from models.user import User
+from models.city import City
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
-import models
+
 
 class Place(BaseModel, Base):
     '''
@@ -32,7 +31,6 @@ class Place(BaseModel, Base):
         amenity_ids = []
         user = relationship("User")
         cities = relationship("City")
-        reviews = relationship("Review", cascade="all, delete-orphan")
 
     else:
         city_id = ""

@@ -2,15 +2,15 @@
 '''
     Implementation of the Review class
 '''
-
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
+from models.place import Place
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from os import getenv
 from sqlalchemy.orm import relationship
 
-class Review(BaseModel):
+class Review(BaseModel, Base):
     '''
         Implementation for the Review.
     '''
