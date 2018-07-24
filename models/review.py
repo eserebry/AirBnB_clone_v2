@@ -3,8 +3,6 @@
     Implementation of the Review class
 '''
 from models.base_model import BaseModel, Base
-from models.user import User
-from models.place import Place
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from os import getenv
@@ -18,9 +16,10 @@ class Review(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
 
         text = Column(String(1024), nullable=False)
-        place_id = Column(String(60), ForeignKey(Place.id), nullable=False)
-        user_id = Column(String(60), ForeignKey(User.id), nullable=False)
+        place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
+        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         user = relationship("User")
+        place = relationship("Place")
 
     else:
         place_id = ""
