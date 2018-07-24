@@ -7,6 +7,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
 from os import getenv
+import models
 
 class State(BaseModel, Base):
     '''
@@ -20,3 +21,12 @@ class State(BaseModel, Base):
 
     else:
         name = ""
+
+        @property
+        def cities(self):
+            instance_list = []
+            for key, obj in models.storage.__objects.items()
+                if obj.__class__ == 'City':
+                    if obj.state_id == self.id:
+                        instance_list.append(obj)
+            return instance_list
