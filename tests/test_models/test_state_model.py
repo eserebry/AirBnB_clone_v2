@@ -2,11 +2,12 @@
 '''
     Contain tests for the state module.
 '''
+import os
 import unittest
 from models.base_model import BaseModel
 from models.state import State
 
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestState(unittest.TestCase):
     '''
         Test the State class.
