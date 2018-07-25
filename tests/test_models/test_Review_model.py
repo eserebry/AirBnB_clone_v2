@@ -8,6 +8,7 @@ import unittest
 from models.base_model import BaseModel
 from models.review import Review
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestReview(unittest.TestCase):
     '''
@@ -44,6 +45,6 @@ class TestReview(unittest.TestCase):
         self.assertIsInstance(user_id, str)
         self.assertIsInstance(text, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-

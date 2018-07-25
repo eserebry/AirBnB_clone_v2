@@ -10,6 +10,7 @@ import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class testFileStorage(unittest.TestCase):
     '''
@@ -76,7 +77,7 @@ class testFileStorage(unittest.TestCase):
         with open("file.json", encoding="UTF8") as fd:
             content = json.load(fd)
 
-        self.assertTrue(type(content) is dict)
+        self.assertTrue(isinstance(content, dict))
 
     def test_the_type_file_content(self):
         '''
@@ -99,9 +100,9 @@ class testFileStorage(unittest.TestCase):
         try:
             self.storage.reload()
             self.assertTrue(True)
-        except:
+        except BaseException:
             self.assertTrue(False)
+
 
 if __name__ == '__main__':
     unittest.main()
-

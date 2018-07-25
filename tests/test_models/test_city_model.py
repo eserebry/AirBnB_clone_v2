@@ -8,6 +8,7 @@ import unittest
 from models.base_model import BaseModel
 from models.city import City
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestUser(unittest.TestCase):
     '''
@@ -42,6 +43,6 @@ class TestUser(unittest.TestCase):
         name = getattr(new_city, "state_id")
         self.assertIsInstance(name, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-

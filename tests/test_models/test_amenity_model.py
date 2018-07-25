@@ -8,6 +8,7 @@ import unittest
 from models.base_model import BaseModel
 from models.amenity import Amenity
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestAmenity(unittest.TestCase):
     '''
@@ -36,6 +37,6 @@ class TestAmenity(unittest.TestCase):
         name_value = getattr(new_amenity, "name")
         self.assertIsInstance(name_value, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-

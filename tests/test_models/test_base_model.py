@@ -56,7 +56,9 @@ class TestBase(unittest.TestCase):
         self.assertEqual(self.my_model.updated_at.year,
                          self.my_model.created_at.year)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_save(self):
         '''
             Checks that after updating the instance; the dates differ in the
@@ -156,6 +158,7 @@ class TestBase(unittest.TestCase):
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(my_model_dict)
         self.assertNotEqual(self.my_model, new_model)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,8 +8,10 @@ from io import StringIO
 from console import HBNBCommand
 from unittest.mock import create_autospec
 
+
 class TestConsole(unittest.TestCase):
     ''' Test the console module'''
+
     def setUp(self):
         '''setup for'''
         self.backup = sys.stdout
@@ -54,7 +56,7 @@ class TestConsole(unittest.TestCase):
         console.onecmd("show User " + user_id)
         x = (self.capt_out.getvalue())
         sys.stdout = self.backup
-        self.assertTrue(str is type(x))
+        self.assertTrue(isinstance(x, str))
 
     def test_show_class_name(self):
         '''
@@ -141,5 +143,6 @@ class TestConsole(unittest.TestCase):
 
     '''
 
+
 if __name__ == '__main__':
-        unittest.main()
+    unittest.main()

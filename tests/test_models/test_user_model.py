@@ -11,6 +11,7 @@ from io import StringIO
 import sys
 import datetime
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestUser(unittest.TestCase):
     '''
@@ -66,6 +67,7 @@ class TestUser(unittest.TestCase):
         new = User()
         name = getattr(new, "password")
         self.assertIsInstance(name, str)
+
 
 if __name__ == '__main__':
     unittest.main()

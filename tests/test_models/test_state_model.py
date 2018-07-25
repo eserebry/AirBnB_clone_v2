@@ -7,6 +7,7 @@ import unittest
 from models.base_model import BaseModel
 from models.state import State
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestState(unittest.TestCase):
     '''
@@ -35,6 +36,6 @@ class TestState(unittest.TestCase):
         name = getattr(new_state, "name")
         self.assertIsInstance(name, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-
