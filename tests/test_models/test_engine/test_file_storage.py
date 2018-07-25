@@ -10,7 +10,7 @@ import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class testFileStorage(unittest.TestCase):
     '''
         Testing the FileStorage class
@@ -101,3 +101,7 @@ class testFileStorage(unittest.TestCase):
             self.assertTrue(True)
         except:
             self.assertTrue(False)
+
+if __name__ == '__main__':
+    unittest.main()
+

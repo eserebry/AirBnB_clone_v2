@@ -41,3 +41,7 @@ class TestUser(unittest.TestCase):
         new_city = City()
         name = getattr(new_city, "state_id")
         self.assertIsInstance(name, str)
+
+if __name__ == '__main__':
+    unittest.main()
+

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 ''' Test suite for the console'''
 
-
 import sys
 import models
 import unittest
@@ -9,8 +8,7 @@ from io import StringIO
 from console import HBNBCommand
 from unittest.mock import create_autospec
 
-
-class test_console(unittest.TestCase):
+class TestConsole(unittest.TestCase):
     ''' Test the console module'''
     def setUp(self):
         '''setup for'''
@@ -142,3 +140,6 @@ class test_console(unittest.TestCase):
         self.assertTrue(console.onecmd("update"))
 
     '''
+
+if __name__ == '__main__':
+        unittest.main()
