@@ -8,7 +8,7 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 
-place_amenity_association = Table("place_amenity", Base.metadata,
+place_amenity = Table("place_amenity", Base.metadata,
                                   Column("place_id", String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
                                   Column("amenity_id", String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 
@@ -33,7 +33,7 @@ class Place(BaseModel, Base):
         user = relationship("User")
         cities = relationship("City")
         reviews = relationship("Review", cascade="all, delete-orphan")
-        amenities = relationship("Amenity", secondary=place_amenity_association, viewonly=False, back_populates="place_amenities")
+        amenities = relationship("Amenity", secondary=place_amenity, viewonly=False, back_populates="place_amenities")
 
     else:
         city_id = ""
