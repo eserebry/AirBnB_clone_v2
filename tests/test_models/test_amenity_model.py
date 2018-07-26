@@ -5,11 +5,10 @@
 '''
 import os
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestAmenity(unittest.TestCase):
     '''
         Testing Amenity class
@@ -22,6 +21,15 @@ class TestAmenity(unittest.TestCase):
         new_amenity = Amenity()
         self.assertIsInstance(new_amenity, BaseModel)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'only FileStorage')
+    def test_Amenity_inheritance_Base(self):
+        '''
+            test inheritance with declarative base
+        '''
+        new_amenity = Amenity()
+        self.assertIsInstance(new_amenity, Base)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_Amenity_attributes(self):
         '''
             Test that Amenity class had name attribute.
@@ -29,6 +37,7 @@ class TestAmenity(unittest.TestCase):
         new_amenity = Amenity()
         self.assertTrue("name" in new_amenity.__dir__())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_Amenity_attribute_type(self):
         '''
             Test that Amenity class had name attribute's type.

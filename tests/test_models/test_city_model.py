@@ -5,11 +5,10 @@
 '''
 import os
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestUser(unittest.TestCase):
     '''
         Testing User class
@@ -22,11 +21,21 @@ class TestUser(unittest.TestCase):
         new_city = City()
         self.assertIsInstance(new_city, BaseModel)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'only FileStorage')
+    def test_City_inheritance_Base(self):
+        '''
+            tests the inheritance with declarative base
+        '''
+        new_city = City()
+        self.assertIsInstance(new_city, Base)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_User_attributes(self):
         new_city = City()
         self.assertTrue("state_id" in new_city.__dir__())
         self.assertTrue("name" in new_city.__dir__())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_type_name(self):
         '''
             Test the type of name
@@ -35,6 +44,7 @@ class TestUser(unittest.TestCase):
         name = getattr(new_city, "name")
         self.assertIsInstance(name, str)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_type_name(self):
         '''
             Test the type of name

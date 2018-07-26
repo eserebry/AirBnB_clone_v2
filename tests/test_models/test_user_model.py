@@ -5,14 +5,13 @@
 '''
 import os
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from io import StringIO
 import sys
 import datetime
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestUser(unittest.TestCase):
     '''
         Testing User class
@@ -25,6 +24,19 @@ class TestUser(unittest.TestCase):
         new_user = User()
         self.assertIsInstance(new_user, BaseModel)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') != 'db',
+        'only FileStorage')
+    def test_User_inheritance_Base(self):
+        '''
+            tests for inheritance with declarative base
+        '''
+        new_user = User()
+        self.assertIsInstance(new_user, Base)
+
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_User_attributes(self):
         '''
             Test the user attributes exist
@@ -36,6 +48,9 @@ class TestUser(unittest.TestCase):
         self.assertTrue("last_name" in new_user.__dir__())
         self.assertTrue("password" in new_user.__dir__())
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_type_email(self):
         '''
             Test the type of name
@@ -44,6 +59,9 @@ class TestUser(unittest.TestCase):
         name = getattr(new, "email")
         self.assertIsInstance(name, str)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_type_first_name(self):
         '''
             Test the type of name
@@ -52,6 +70,9 @@ class TestUser(unittest.TestCase):
         name = getattr(new, "first_name")
         self.assertIsInstance(name, str)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_type_last_name(self):
         '''
             Test the type of last_name
@@ -60,6 +81,9 @@ class TestUser(unittest.TestCase):
         name = getattr(new, "last_name")
         self.assertIsInstance(name, str)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'only FileStorage')
     def test_type_password(self):
         '''
             Test the type of password

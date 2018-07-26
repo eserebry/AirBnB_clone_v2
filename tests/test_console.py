@@ -130,7 +130,7 @@ class TestConsole(unittest.TestCase):
         console = self.create()
         console.onecmd("create Binita")
         x = (self.capt_out.getvalue())
-        self.assertEqual("** class doesn't exist **\n", x)
+        self.assertEqual("name 'Binita' is not defined\n** class doesn't exist **\n", x)
 
     '''
     def test_destroy(self):

@@ -5,11 +5,10 @@
 '''
 import os
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.review import Review
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestReview(unittest.TestCase):
     '''
         Testing Review class
@@ -21,7 +20,16 @@ class TestReview(unittest.TestCase):
         '''
         new_review = Review()
         self.assertIsInstance(new_review, BaseModel)
+    
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'only FileStorage')
+    def test_Review_inheritance_Base(self):
+        '''
+            test inheritance with declarative base
+        '''
+        new_review = Review()
+        self.assertIsInstance(new_review, Base)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_Review_attributes(self):
         '''
             Test that Review class has place_id, user_id and text
@@ -32,6 +40,7 @@ class TestReview(unittest.TestCase):
         self.assertTrue("user_id" in new_review.__dir__())
         self.assertTrue("text" in new_review.__dir__())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_Review_attributes(self):
         '''
             Test that Review class has place_id, user_id and text

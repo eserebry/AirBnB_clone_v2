@@ -4,11 +4,10 @@
 '''
 import os
 import unittest
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.state import State
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
 class TestState(unittest.TestCase):
     '''
         Test the State class.
@@ -21,6 +20,15 @@ class TestState(unittest.TestCase):
         new_state = State()
         self.assertIsInstance(new_state, BaseModel)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'only FileStorage')
+    def test_State_inheritance_Base(self):
+        '''
+            Test inheritance with declarative base
+        '''
+        new_state = State()
+        self.assertIsInstance(new_state, Base)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_State_attributes(self):
         '''
             Test that State class contains the attribute `name`.
@@ -28,6 +36,7 @@ class TestState(unittest.TestCase):
         new_state = State()
         self.assertTrue("name" in new_state.__dir__())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'only FileStorage')
     def test_State_attributes_type(self):
         '''
             Test that State class attribute name is class type str.
