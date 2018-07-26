@@ -49,13 +49,13 @@ class HBNBCommand(cmd.Cmd):
             if len(args) > 1:
                 for i in range(1, len(args)):
                     key, value = args[i].split('=')
-                    if value[0] == '\"' and value[len(value) - 1] == '\"':
+                    if value[0] == '"' and value[len(value) - 1] == '"':
                         value = value[1:len(value) - 1]
-                        value = value.replace('"', '\"')
-                        value = value.replace('_', ' ')
+                        if '_' in value:
+                            value = value.replace('_', ' ')
                         value = str(value)
 
-                    elif '.' in value:
+                    elif isinstance(eval(value), float):
                         value = float(value)
 
                     elif isinstance(eval(value), int):
