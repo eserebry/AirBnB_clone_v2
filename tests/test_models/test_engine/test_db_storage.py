@@ -83,7 +83,7 @@ class testDBStorage(unittest.TestCase):
                 self.assertTrue(obj.number_bathrooms, 1)
                 self.assertTrue(obj.max_guest, 2)
                 self.assertTrue(obj.price_by_night, 50)
-                self.assertTrue(obj.description, None)
+                self.assertTrue(obj.description is None)
             else:
                 continue
 
@@ -122,8 +122,11 @@ class testDBStorage(unittest.TestCase):
         models.storage.delete(state)
         models.storage.save()
         all_stored = models.storage.all()
-        self.assertFalse(all_stored["State." + state.id])
+        self.assertRaises(KeyError, all_stored.__getitem__, "State." + state.id)
 
+    def teardown(self):
+        self.session.close()
+        self.session.rollback()
 
 if __name__ == '__main__':
     unittest.main()
