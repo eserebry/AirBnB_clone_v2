@@ -3,11 +3,11 @@
 
 # Install NGINX
 sudo apt-get -y update
-sudo apt-get -y nginx
+sudo apt-get -y install nginx
 
 # Create folders
-mkdir /data/web_static/releases/test/
-mkdir /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
 
 # Create fake HTML file
 touch /data/web_static/releases/test/index.html
