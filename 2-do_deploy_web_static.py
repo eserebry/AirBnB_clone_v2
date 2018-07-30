@@ -38,10 +38,12 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/")
         run("sudo mkdir -p {}".format(input_path))
-        run("tar -zxvf /tmp/{} -C {}".format(filename_w_ext, input_path))
-        run("sudo rm /tmp/{}".format(filename_w_ext))
+        run("sudo tar -zxvf /tmp/{} -C {}".format(filename_w_ext, input_path))
+        run("sudo rm -rf /tmp/{}".format(filename_w_ext))
+        run("sudo mv -n {}/web_static/* {}".format(input_path, input_path))
+        run("sudo rm -rf {}/web_static".format(input_path))
         run("sudo rm /data/web_static/current")
-        run("sudo ln -sf {} /data/web_static/current".format(input_path))
+        run("sudo ln -s {} /data/web_static/current".format(input_path))
         return True
 
     except Exception:
