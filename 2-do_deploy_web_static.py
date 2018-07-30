@@ -21,9 +21,9 @@ def do_deploy(archive_path):
         run("tar -zxvf /tmp/{} -C {}".format(filename_w_ext, input_path))
         run("sudo rm /tmp/{}".format(filename_w_ext))
         run("sudo rm /data/web_static/current")
-        run("sudo ln -sf /data/web_static/releases/{}/ 
-            /data/web_static/current".format(filename_wo_ext))
+        run("sudo ln - sf / data / web_static / releases / {} /
+            /data / web_static / current".format(filename_wo_ext))
         return True
 
-    except:
+    except BaseException:
         return False
