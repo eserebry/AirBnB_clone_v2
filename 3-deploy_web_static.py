@@ -49,7 +49,11 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
+
 def deploy():
+    """
+        packs and deploys a web_static folder to a web server
+    """
     return_pack = do_pack()
     if return_pack is None:
         return False
