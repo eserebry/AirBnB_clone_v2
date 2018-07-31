@@ -9,6 +9,7 @@ sudo mkdir /data/web_static/shared/
 sudo mkdir /data/web_static/releases/test/
 echo "Hello World!" | sudo tee /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-location="location /hbnb_static/ {\nalias /data/web_static/current/;\n}\n"sudo chown -R ubntu:ubuntu /data/
+sudo chown -R ubntu:ubuntu /data/
+location="location /hbnb_static/ {\nalias /data/web_static/current/;\n}\n"
 sudo sed -i "29i $location" /etc/nginx/sites-available/default
 sudo service nginx restart
