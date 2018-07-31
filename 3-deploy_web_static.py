@@ -16,25 +16,24 @@ def do_pack():
     tar_cmd = "sudo tar -cvzf "
     mkdir_cmd = "sudo mkdir -p versions/"
     date_string = datetime.now().strftime('%Y%m%d%H%M%S')
-    local(mkdir_cmd)
     try:
+        local(mkdir_cmd)
         local(tar_cmd + "versions/web_static_{}.tgz "
               .format(date_string) + "web_static")
-        return "/versions/web_static_{}.tgz".format(date_string)
+        return "versions/web_static_{}.tgz".format(date_string)
     except BaseException:
         return None
-
 
 def do_deploy(archive_path):
     """
         deploy the archive to the webservers
     """
-    if os.path.exists(archive_path) is False:
-        return False
     filename_wo_ext = archive_path[9:34]
     filename_w_ext = archive_path[9:]
     input_path = "/data/web_static/releases/{}/".format(filename_wo_ext)
 
+    if os.path.exists(archive_path) is False:
+        return False
     try:
         put(archive_path, "/tmp/")
         run("sudo mkdir -p {}".format(input_path))
@@ -46,9 +45,8 @@ def do_deploy(archive_path):
         run("sudo ln -s {} /data/web_static/current".format(input_path))
         return True
 
-    except Exception:
+    except BaseException:
         return False
-
 
 def deploy():
     """
@@ -57,5 +55,4 @@ def deploy():
     return_pack = do_pack()
     if return_pack is None:
         return False
-    return_deploy = do_deploy(return_pack)
-    return return_deploy
+    return do_deploy(return_pack)
