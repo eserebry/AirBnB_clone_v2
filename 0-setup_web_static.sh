@@ -1,26 +1,14 @@
 #!/usr/bin/env bash
-# Sets up the web servers for the deployment of web_static
-
-# Install NGINX
+#sets up your web servers for the deployment of web_static
 sudo apt-get -y update
 sudo apt-get -y install nginx
-
-# Create folders
-sudo mkdir -p /data/web_static/releases/test/
-sudo mkdir -p /data/web_static/shared/
-
-# Create fake HTML file
-touch /data/web_static/releases/test/index.html
-echo -e "<html>\n\t<head>\n\t</head>\n\t<body>\n\t\tHolberton School\n\t</body>\n</html>" > /data/web_static/releases/test/index.html
-
-# Create symbolic link
+sudo mkdir /data/
+sudo mkdir /data/web_static/
+sudo mkdir /data/web_static/releases/
+sudo mkdir /data/web_static/shared/
+sudo mkdir /data/web_static/releases/test/
+echo "Hello World!" | sudo tee /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-
-# Ownership of /data/ folder to user and group
-sudo chown -R ubuntu:ubuntu /data/
-
-# Configure Nginx to serve content
-content="\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n"
-sudo sed -i "37i\ $content" /etc/nginx/sites-enabled/default
-sudo service nginx reload
+location="location /hbnb_static/ {\nalias /data/web_static/current/;\n}\n"sudo chown -R ubntu:ubuntu /data/
+sudo sed -i "29i $location" /etc/nginx/sites-available/default
 sudo service nginx restart
