@@ -1,24 +1,22 @@
 #!/usr/bin/python3
-"""
-    Compresses contents of a folder
-"""
-
 from fabric.api import *
 from datetime import datetime
+import os
 
 
 def do_pack():
     """
-        compresses a folder to a .tgz archive
+    generates a .tgz archive from the contents of the web_static folder
+    of AirBnB Clone repo
     """
-    tar_cmd = "sudo tar -cvzf "
-    mkdir_cmd = "sudo mkdir -p versions/"
-    date_string = datetime.now().strftime('%Y%m%d%H%M%S')
-    local(mkdir_cmd)
     try:
-        local(tar_cmd + "versions/web_static_{}.tgz "
-              .format(date_string) +
-              "web_static")
-        return "/versions/web_static_{}.tgz".format(date_string)
-    except BaseException:
+        date = datetime.now()
+        file_name = "web_static_{}{}{}{}{}{}.tgz".\
+                    format(date.year, date.month, date.day,
+                           date.hour, date.minute, date.second)
+        local("mkdir versions")
+        local("tar -cfvz /versions/web_static_{}.tgz".format(date))
+        print("web_static packed: versions/web_static_{}.tgz -> {}".
+              format(file_name, os.path.getsize(file_name)))
+    except:
         return None
