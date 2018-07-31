@@ -15,8 +15,8 @@ def do_pack():
                     format(date.year, date.month, date.day,
                            date.hour, date.minute, date.second)
         local("mkdir versions")
-        local("tar -cfvz /versions/web_static_{}.tgz".format(date))
-        print("web_static packed: versions/web_static_{}.tgz -> {}".
+        local("tar -cfvz versions/{} web_static".format(file_name))
+        print("web_static packed: {} -> {}".
               format(file_name, os.path.getsize(file_name)))
     except:
         return None
