@@ -19,9 +19,10 @@ def do_pack():
                            date.hour, date.minute, date.second)
         local("mkdir -p versions")
         local("tar -cvzf versions/{} web_static".format(file_name))
-        print("web_static packed: versions/{} -> {}".
-              format(file_name, os.path.getsize(file_name)))
-    except:
+        if os.path.exists("versions/{}".format(file_name)):
+            return "versions/{}".format(file_name)
+    except BaseException as e:
+        print(e)
         return None
 
 
@@ -54,9 +55,8 @@ def deploy():
     creates and distributes an archive to your web servers,
     using the function deploy
     """
-    try:
-        archive_path = do_pack()
-        result = do_deploy(archive_path)
-        return result
-    except:
+    archive_path = do_pack()
+    if archive_path is None:
         return False
+    result = do_deploy(archive_path)
+    return result
