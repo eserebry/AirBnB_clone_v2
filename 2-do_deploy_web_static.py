@@ -19,5 +19,9 @@ def do_deploy(archive_path):
         run("mkdir -p {}".format(unc_archive))
         run("tar -xzf /tmp/{} -C {}".format(arch_filename_ext, unc_archive))
         run("rm /tmp/{}".format(arch_filename_ext))
+        run("mv {}/web_static/* {}".format(unc_archive, unc_archive))
+        run("rm -rf {}/web_static".format(unc_archive))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(unc_archive))
     except:
         return False
