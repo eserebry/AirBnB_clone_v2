@@ -55,7 +55,7 @@ def deploy():
     using the function deploy
     """
     try:
-        do_pack()
+        archive_path = do_pack()
         result = do_deploy(archive_path)
         return result
     except:
