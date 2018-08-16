@@ -16,6 +16,7 @@ from models.state import State
 from models.user import User
 import models
 
+
 class DBStorage:
     '''
     Main database storage class
@@ -33,10 +34,12 @@ class DBStorage:
         host = getenv('HBNB_MYSQL_HOST')
         database = getenv('HBNB_MYSQL_DB')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, password, host, database), pool_pre_ping=True) 
+        self.__engine = create_engine
+        ('mysql+mysqldb://{}:{}@{}/{}'.format
+         (user, password, host, database), pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
-                             
+
     def all(self, cls=None):
         '''
             Queries database for specified classes
@@ -98,7 +101,13 @@ class DBStorage:
             Restarts the database engine session
         '''
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
+    def close(self):
+        '''
+            Rempving session
+        '''
+        self.__session.remove()
