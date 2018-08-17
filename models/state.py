@@ -3,10 +3,14 @@
     Implementation of the State class
 '''
 import sqlalchemy
-from models.base_model import BaseModel, Base
+import models
+from models.base_model import BaseModel
+from models.base_model import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
 from os import getenv
+from models.city import City
+
 
 class State(BaseModel, Base):
     '''
@@ -24,8 +28,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             instance_list = []
-            for key, obj in models.storage.__objects.items():
-                if obj.__class__ == 'City':
-                    if obj.state_id == self.id:
+            for key, obj in models.storage.all(City).items():
+                if obj.state_id == self.id:
                         instance_list.append(obj)
             return instance_list

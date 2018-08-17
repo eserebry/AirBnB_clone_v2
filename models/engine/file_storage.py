@@ -22,7 +22,7 @@ class FileStorage:
             return self.__objects
 
         for key, value in self.__objects.items():
-            if value.__class__ == cls:
+            if type(value) is cls:
                 new_dict[key] = value
         return new_dict
 

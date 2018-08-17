@@ -112,4 +112,4 @@ class DBStorage:
         '''
             Rempving session
         '''
-        self.__session.remove(obj)
+        self.__session.close()
