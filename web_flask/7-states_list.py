@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# starts a Flask web application
+""" starts a Flask web application """
 
 from flask import Flask, render_template
 from models import storage
@@ -53,7 +53,6 @@ def odd_or_even(n):
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-#    states = []
     states = storage.all(State)
     print(states)
     return render_template('7-states_list.html', states=states)
