@@ -2,7 +2,8 @@
 # starts a Flask web application
 
 from flask import Flask, render_template
-from models import storage, storage.all()
+from models import storage
+from models.state import State
 app = Flask(__name__)
 
 
@@ -52,13 +53,16 @@ def odd_or_even(n):
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-    states = []
+#    states = []
+    states = storage.all(State)
+    print(states)
     return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exeption):
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
