@@ -33,10 +33,12 @@ class DBStorage:
         password = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
         database = getenv('HBNB_MYSQL_DB')
-
-        self.__engine = create_engine
-        ('mysql+mysqldb://{}:{}@{}/{}'.format
-         (user, password, host, database), pool_pre_ping=True)
+        my_sql = "mysql+mysqldb://{}:{}@{}/{}".format(user,
+                                                      password,
+                                                      host,
+                                                      database)
+        self.__engine = create_engine('{}'.format(my_sql),
+                                      pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -110,4 +112,4 @@ class DBStorage:
         '''
             Rempving session
         '''
-        self.__session.remove()
+        self.__session.remove(obj)
