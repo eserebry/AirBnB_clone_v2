@@ -8,12 +8,13 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import getenv
 
+
 class User(BaseModel, Base):
     '''
         Definition of the User class
     '''
     __tablename__ = 'users'
-    
+
     if getenv('HBNB_TYPE_STORAGE') == 'db':
 
         email = Column(String(128), nullable=False)
