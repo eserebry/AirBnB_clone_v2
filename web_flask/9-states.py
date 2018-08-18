@@ -70,7 +70,7 @@ def by_states():
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id=None):
     states = storage.all(State)
-    title = "State"
+    title = "States"
     if id is not None:
         for items in states.values():
             if id == items.id:
