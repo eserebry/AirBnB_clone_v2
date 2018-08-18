@@ -4,6 +4,22 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-        <H1>Number: {{ n }} is {{ num }}</H1>
+        <H1>{{ title }}</H1>
+	{% if title != "Not found!" %}
+	    {% if id == None %}
+	        <UL>
+	          {% for item in states.values()|sort(attribute='name') %}
+	          <LI>{{ item.id }}<B>{{ item.name }}</B></LI>
+	    {% endfor %}
+	        </UL>
+	      {% else %}
+	          <H3>Cities:</H3>
+	          <UL>
+		    {% for city in states.cities|sort(attribute='name') %}
+	                  <LI>{{ city.id }}<B>{{ city.name }}</B></LI>
+		    {% endfor %}
+		  </UL>
+	      {% endif %}
+	{% endif %}
     </BODY>
 </HTML>
